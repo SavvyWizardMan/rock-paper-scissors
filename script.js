@@ -90,6 +90,3 @@ const playGame = () => {
         console.log("Human wins!");
     }
 }
-
-playGame();
-
