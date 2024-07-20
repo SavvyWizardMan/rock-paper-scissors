@@ -9,13 +9,16 @@ const getComputerChoice = () => {
     }
 }
 
-const getHumanChoice = () => {
-    return prompt("Rock, Paper, or Scissors?");
-}
-
 const playGame = () => {
     let humanScore = 0;
     let computerScore = 0;
+    const btn = document.querySelectorAll('button');
+    const div = document.querySelector('.results');
+    const hScore = document.querySelector('.human');
+    const cScore = document.querySelector('.computer');
+    const startBtn = document.createElement('button');
+    let winner = "";
+
 
     /* checks all cases where given the player choice, a new
     switch case statement is opened to compare the choice
@@ -27,14 +30,14 @@ const playGame = () => {
             case "rock":
                 switch(computerChoice.toLowerCase()) {
                     case "rock":
-                        console.log("It's a tie!");
+                        div.textContent = "It's a Tie! Rock ties Rock";
                         break;
                     case "paper":
-                        console.log("You Lose! Paper beats Rock!");
+                        div.textContent = "You Lose! Paper beats Rock!";
                         computerScore++;
                         break;
                     case "scissors":
-                        console.log("You Win! Rock beats Scissors!");
+                        div.textContent = "You Win! Rock beats Scissors!" ;
                         humanScore++;
                         break;
                 }
@@ -42,14 +45,14 @@ const playGame = () => {
             case "paper":
                 switch(computerChoice.toLowerCase()) {
                     case "rock":
-                        console.log("You Win! Paper beats Rock!");
+                        div.textContent = "You Win! Paper beats Rock!";
                         humanScore++;
                         break;
                     case "paper":
-                        console.log("It's a tie!");
+                        div.textContent = "It's a Tie! Paper ties Paper" ;
                         break;
                     case "scissors":
-                        console.log("You Lose! Scissors beat Paper");
+                        div.textContent = "You Lose! Scissors beat Paper";
                         computerScore++;
                         break;
                 }
@@ -57,36 +60,73 @@ const playGame = () => {
             case "scissors":
                 switch(computerChoice.toLowerCase()) {
                     case "rock":
-                        console.log("You Lose! Rock beats Scissors!");
+                        div.textContent = "You Lose! Rock beats Scissors!";
                         computerScore++;
                         break;
                     case "paper":
-                        console.log("You Win! Scissors beats Paper!");
+                        div.textContent = "You Win! Scissors beats Paper!";
                         humanScore++;
                         break;
                     case "scissors":
-                        console.log("It's a tie!");
+                        div.textContent = "It's a Tie! Scissors ties Scissors";
                         break;
                 }
         }
     }
 
-    /* a while loop that runs for 5 rounds */
+    btn.forEach((button) => {
 
-    let count = 0;
-    
-    while (count < 5) {
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
+        button.addEventListener('click', () => {
+            const humanSelection = button.value;
+            console.log(humanSelection);
+            const computerSelection = getComputerChoice();
 
-        playRound(humanSelection, computerSelection);
-        count++;
-    }
-    if (humanScore === computerScore) {
-        console.log("You Tied!")
-    } else if (computerScore > humanScore) {
-        console.log("Computer wins!");
-    } else {
-        console.log("Human wins!");
+            playRound(humanSelection, computerSelection);
+
+            hScore.textContent = `Human Score: ${humanScore}`;
+            cScore.textContent = `Computer Score: ${computerScore}`;
+            
+            if (humanScore === 5) {
+                winner = "Human";
+                endGame();
+            } else if (computerScore === 5){
+                winner = "Computer";
+                endGame();
+            }
+        });
+    });
+
+    const container = document.querySelector('.container');
+
+    const endGame = () => {
+        container.innerHTML = `<h2>${winner} Wins!</h2>
+        <p>Would you like to play again?</p>`;
+        startBtn.classList.add('startBtn');
+        startBtn.addEventListener('click', () => {
+            container.innerHTML = `
+            <div class="container">
+            <div class="space">
+                <span class="human">Human Score: 0</span>
+                <span class="computer">Computer Score: 0</span>
+            </div>
+            <p>What will it be?</p>
+            <div class="flex">
+                <button value="rock">Rock 🪨</button>
+                <button value="paper">Paper 📝</button>
+                <button value="scissors">Scissors ✂</button>
+            </div>
+            <div class="results"></div>
+            </div>`
+            playGame();
+        });
+        startBtn.textContent = "Play Again";
+        container.appendChild(startBtn);
     }
 }
+
+playGame();
+
+
+
+
+
