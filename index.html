@@ -4,11 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>Rock, Paper, Scissors</h1>
-    <p>Hey there, welcome to my attempt at the Rock, Paper, and Scissors project for The Odin Project. To play this version, open the console up (right click and then inspect or CTRL + Shift + C) then click the Console tab.</p>
-    <button onclick="playGame()">Click to Start</button>
+    <div class="container">
+        <div class="space">
+            <span class="human">Human Score: 0</span>
+            <span class="computer">Computer Score: 0</span>
+        </div>
+        <p>What will it be?</p>
+        <div class="flex">
+            <button value="rock">Rock 🪨</button>
+            <button value="paper">Paper 📝</button>
+            <button value="scissors">Scissors ✂</button>
+        </div>
+        <div class="results"></div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
